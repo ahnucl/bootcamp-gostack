@@ -25,6 +25,15 @@
     "rules": {
       "prettier/prettier": "error",
       "class-methods-use-this": "off",
+      "camelcase":  [
+        "error",
+        {
+          "allow": [
+            "created_at",
+            "updated_at"
+          ]
+        }
+      ],
       "import/extensions": [
         "error",
         "ignorePackages",
