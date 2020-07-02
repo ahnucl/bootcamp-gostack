@@ -26,6 +26,8 @@ usersRouter.post('/', async (request, response) => {
   }
 });
 
-// usersRouter.patch('/avatar');
+usersRouter.patch('/avatar', ensureAuthenticated, async (request, response) => {
+  return response.json({ oka: true });
+});
 
 export default usersRouter;
