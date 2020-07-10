@@ -1,59 +1,68 @@
-import React from 'react';
+import React, { useState, FormEvent } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
 import logoImg from '../../assets/logo.svg';
+import api from '../../services/api';
 
 import { Title, Form, Repositories } from './styles';
+import Repository from '../Repository';
+
+interface Repository {
+  full_name: string;
+  description: string;
+  owner: {
+    login: string;
+    avatar_url: string;
+  };
+}
+
+interface ResponseData {
+  data: Repository;
+}
 
 const Dashboard: React.FC = () => {
+  const [newRepo, setNewRepo] = useState('');
+  const [repositories, setRepositories] = useState<Repository[]>([]);
+
+  async function handleAddRepository(
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<void> {
+    event.preventDefault();
+
+    const response = await api.get<Repository>(`repos/${newRepo}`);
+
+    const repository = response.data;
+
+    setRepositories([...repositories, repository]);
+
+    setNewRepo('');
+  }
+
   return (
     <>
       <img src={logoImg} alt="Github Explorer" />
       <Title>Explore repositórios no Github</Title>
 
-      <Form>
-        <input placeholder="Digite o nome do repositório" />
+      <Form onSubmit={handleAddRepository}>
+        <input
+          value={newRepo}
+          onChange={e => setNewRepo(e.target.value)}
+          placeholder="Digite o nome do repositório"
+        />
         <button type="submit">Pesquisar</button>
       </Form>
 
       <Repositories>
-        <a href="teste">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png"
-            alt="spongebob"
-          />
-          <div>
-            <strong>SpongeBob's repository</strong>
-            <p>Esse é só um exemplo de repositório</p>
-          </div>
+        {repositories.map(repo => (
+          <a key={repo.full_name} href="teste">
+            <img src={repo.owner.avatar_url} alt={repo.owner.login} />
+            <div>
+              <strong>{repo.full_name}</strong>
+              <p>{repo.description}</p>
+            </div>
 
-          <FiChevronRight size={20} />
-        </a>
-
-        <a href="teste">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png"
-            alt="spongebob"
-          />
-          <div>
-            <strong>SpongeBob's repository</strong>
-            <p>Esse é só um exemplo de repositório</p>
-          </div>
-
-          <FiChevronRight size={20} />
-        </a>
-
-        <a href="teste">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png"
-            alt="spongebob"
-          />
-          <div>
-            <strong>SpongeBob's repository</strong>
-            <p>Esse é só um exemplo de repositório</p>
-          </div>
-
-          <FiChevronRight size={20} />
-        </a>
+            <FiChevronRight size={20} />
+          </a>
+        ))}
       </Repositories>
     </>
   );
