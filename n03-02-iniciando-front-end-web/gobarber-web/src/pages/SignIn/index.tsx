@@ -19,7 +19,7 @@ const SignIn: React.FC = () => {
       <Content>
         <img src={logoImg} alt="GoBarber" />
 
-        <Form initialData={{ email: '@gmail.com' }} onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <h1>Faça seu logon</h1>
           <Input name="email" icon={FiMail} placeholder="E-mail" />
           <Input
