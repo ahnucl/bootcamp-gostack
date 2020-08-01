@@ -11,7 +11,7 @@ export const Container = styled.div`
     font-size: 14px;
     font-weight: 500;
     opacity: 0;
-    transition: opacity 0.4s;
+    transition: opacity 0.4s, visibility 0.4s;
     visibility: hidden;
 
     position: absolute;
