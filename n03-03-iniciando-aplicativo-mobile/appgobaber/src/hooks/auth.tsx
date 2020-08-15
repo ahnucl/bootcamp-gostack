@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useState, useContext } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
 import AsyncStorate from '@react-native-community/async-storage';
 import api from '../services/api';
 
@@ -21,16 +27,22 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
-  const [data, setData] = useState<AuthState>(() => {
-    const token = localStorage.getItem('@GoBarber:token');
-    const user = localStorage.getItem('@GoBarber:user');
+  const [data, setData] = useState<AuthState>({} as AuthState);
 
-    if (token && user) {
-      return { token, user: JSON.parse(user) };
+  useEffect(() => {
+    async function loadStoredData(): Promise<void> {
+      const [[, token], [, user]] = await AsyncStorate.multiGet([
+        '@GoBarber:token',
+        '@GoBarber:user',
+      ]);
+
+      if (user && token) {
+        setData({ token, user: JSON.parse(user) });
+      }
     }
 
-    return {} as AuthState;
-  });
+    loadStoredData();
+  }, []);
 
   const signIn = useCallback(async ({ email, password }) => {
     const response = await api.post('sessions', {
@@ -40,15 +52,16 @@ const AuthProvider: React.FC = ({ children }) => {
 
     const { user, token } = response.data;
 
-    await AsyncStorate.setItem('@GoBarber:token', token);
-    await AsyncStorate.setItem('@GoBarber:user', JSON.stringify(user));
+    await AsyncStorate.multiSet([
+      ['@GoBarber:token', token],
+      ['@GoBarber:user', JSON.stringify(user)],
+    ]);
 
     setData({ token, user });
   }, []);
 
   const signOut = useCallback(async () => {
-    await AsyncStorate.removeItem('@GoBarber:token');
-    await AsyncStorate.removeItem('@GoBarber:user');
+    await AsyncStorate.multiRemove(['@GoBarber:token', '@GoBarber:user']);
 
     setData({} as AuthState);
   }, []);
