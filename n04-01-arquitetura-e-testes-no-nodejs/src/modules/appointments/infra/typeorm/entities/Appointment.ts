@@ -10,8 +10,11 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 
+// Acredito estar ok depender de abstrações, mesmo estando na camada de infra
+import IAppointment from '@modules/appointments/entities/IAppointment';
+
 @Entity('appointments')
-class Appointment {
+class Appointment implements IAppointment {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

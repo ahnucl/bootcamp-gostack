@@ -25,7 +25,7 @@
     "rules": {
       "prettier/prettier": "error",
       "class-methods-use-this": "off",
-      // "@typescript-eslint/camelcase":"off", // Já ajustei para os casos abaixo
+      "no-useless-constructor": "off",
       "camelcase":  [
         "error",
         {
@@ -37,7 +37,18 @@
       ],
       "@typescript-eslint/no-unused-vars": ["error", {
         "argsIgnorePattern": "_"
-      }
+        }
+      ],
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          "selector": "interface",
+          "format": ["PascalCase"],
+          "custom": {
+            "regex": "^I[A-Z]",
+            "match": true
+          }
+        }
       ],
       "import/extensions": [
         "error",
