@@ -43,7 +43,7 @@ describe('AnthenticateUserService', () => {
       fakeHashProvider,
     );
 
-    expect(
+    await expect(
       authenticateUserService.execute({
         email: 'teste@teste.com',
         password: '123456',
@@ -70,7 +70,7 @@ describe('AnthenticateUserService', () => {
       password: '123456',
     });
 
-    expect(
+    await expect(
       authenticateUserService.execute({
         email: 'teste@teste.com',
         password: 'abcdef',
