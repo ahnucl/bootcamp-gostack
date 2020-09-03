@@ -16,13 +16,6 @@ class UsersRepository implements IUsersRepository {
   public async findAllProviders({
     except_user_id,
   }: IFindAllProvidersDTO): Promise<User[]> {
-    /*
-    // Meu código, será que só isso funcionaria? Não! Testei e não funciona
-    const users = await this.ormRepository.find({
-      where: Not({ id: except_user_id }),
-    });
-    return users;
-    */
     let users: User[];
 
     if (except_user_id) {
