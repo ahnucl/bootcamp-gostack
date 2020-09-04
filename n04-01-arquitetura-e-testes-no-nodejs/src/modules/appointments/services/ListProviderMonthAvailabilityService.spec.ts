@@ -15,17 +15,43 @@ describe('ListProviderMonthAvailabilityService', () => {
   it("should be able to list a providers's monthly availability ", async () => {
     await fakeAppointmentsRepository.create({
       provider_id: 'user',
-      date: new Date(2020, 3, 20, 8, 0, 0),
-    });
-
-    await fakeAppointmentsRepository.create({
-      provider_id: 'user',
       date: new Date(2020, 4, 12, 8, 0, 0),
     });
-
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 12, 9, 0, 0),
+    });
     await fakeAppointmentsRepository.create({
       provider_id: 'user',
       date: new Date(2020, 4, 12, 10, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 12, 11, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 12, 12, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 12, 13, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 12, 14, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 12, 15, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 12, 16, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 12, 17, 0, 0),
     });
 
     await fakeAppointmentsRepository.create({
@@ -41,10 +67,9 @@ describe('ListProviderMonthAvailabilityService', () => {
 
     expect(avaiability).toEqual(
       expect.arrayContaining([
-        { day: 12, avaiable: false },
-        { day: 13, avaiable: true },
-        { day: 14, avaiable: true },
-        { day: 20, avaiable: false },
+        { day: 12, available: false },
+        { day: 20, available: true },
+        { day: 21, available: true },
       ]),
     );
   });
