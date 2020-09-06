@@ -13,6 +13,10 @@ describe('ListProviderMonthAvailabilityService', () => {
   });
 
   it("should be able to list a providers's monthly availability ", async () => {
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      return new Date(2020, 4).getTime();
+    });
+
     await fakeAppointmentsRepository.create({
       user_id: 'customer',
       provider_id: 'user',
@@ -81,6 +85,48 @@ describe('ListProviderMonthAvailabilityService', () => {
         { day: 12, available: false },
         { day: 20, available: true },
         { day: 21, available: true },
+      ]),
+    );
+  });
+
+  it('should be able to list a past month as having no availability', async () => {
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      return new Date(2020, 6).getTime();
+    });
+
+    const avaiability = await listProviderMonthAvailability.execute({
+      provider_id: 'user',
+      year: 2020,
+      month: 5,
+    });
+
+    expect(avaiability).toEqual(
+      expect.arrayContaining([
+        { day: 12, available: false },
+        { day: 20, available: false },
+        { day: 21, available: false },
+      ]),
+    );
+  });
+
+  it('should be able to list past days in month as having no availability', async () => {
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      return new Date(2020, 4, 4, 8).getTime();
+    });
+
+    const avaiability = await listProviderMonthAvailability.execute({
+      provider_id: 'user',
+      year: 2020,
+      month: 5,
+    });
+
+    expect(avaiability).toEqual(
+      expect.arrayContaining([
+        { day: 1, available: false },
+        { day: 2, available: false },
+        { day: 3, available: false },
+        { day: 4, available: true },
+        { day: 5, available: true },
       ]),
     );
   });

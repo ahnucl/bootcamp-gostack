@@ -16,7 +16,7 @@ export default class ProvideProviderMonthAvailabilityController {
     const availability = await listProviderMonthAvailabilityService.execute({
       provider_id,
       month,
-      year,
+      year: Number(year),
     });
 
     return response.json(availability);
