@@ -24,7 +24,9 @@
         "prettier"
     ],
     "rules": {
-      "prettier/prettier": "error",
+      "prettier/prettier": ["error", {
+        "endOfLine": "auto"
+      }],
       "class-methods-use-this": "off",
       "no-useless-constructor": "off",
       "camelcase":  [
