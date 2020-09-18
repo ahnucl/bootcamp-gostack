@@ -1,9 +1,13 @@
 import styled, { css } from 'styled-components';
 import { animated } from 'react-spring';
 
+/**
+ * O $ no início do nome da prop indica uma "transient prop" do styled component:
+ * https://styled-components.com/docs/api#transient-props
+ */
 interface ContainerProps {
-  type?: 'success' | 'error' | 'info';
-  hasDescription: number;
+  $type?: 'success' | 'error' | 'info';
+  $hasDescription: number;
 }
 
 const toastTypeVariations = {
@@ -35,7 +39,7 @@ export const Container = styled(animated.div)<ContainerProps>`
     margin-top: 8px;
   }
 
-  ${props => toastTypeVariations[props.type || 'info']}
+  ${props => toastTypeVariations[props.$type || 'info']}
 
   > svg {
     margin: 4px 12px 0 0;
@@ -63,7 +67,7 @@ export const Container = styled(animated.div)<ContainerProps>`
   }
 
   ${props =>
-    !props.hasDescription &&
+    !props.$hasDescription &&
     css`
       align-items: center;
 
