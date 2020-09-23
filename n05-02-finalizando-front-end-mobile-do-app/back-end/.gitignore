@@ -1,0 +1,6 @@
+tmp/*
+!tmp/.gitkeep
+coverage/*
+!coverage/.gitkeep
+.env
+ormconfig.json
