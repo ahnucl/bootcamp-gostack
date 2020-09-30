@@ -3,7 +3,7 @@ import { Platform, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 import { format } from 'date-fns';
-import locale from 'date-fns/locale/pt-BR';
+import ptBR from 'date-fns/locale/pt-BR';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { useAuth } from '../../hooks/auth';
@@ -152,7 +152,7 @@ const CreateAppointment: React.FC = () => {
   }, [availability]);
 
   const formatedSelectedDate = useMemo(
-    () => format(selectedDate, `d 'de' MMMM`, { locale }),
+    () => format(selectedDate, `d 'de' MMMM`, { locale: ptBR }),
     [selectedDate],
   );
 
