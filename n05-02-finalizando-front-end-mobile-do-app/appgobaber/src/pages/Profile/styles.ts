@@ -5,7 +5,7 @@ import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 export const Container = styled.View`
   justify-content: center;
   padding: ${getStatusBarHeight()}px 30px
-    ${Platform.OS === 'android' ? 150 : 30}px;
+    ${Platform.OS === 'android' ? 70 : 30}px;
 `;
 
 export const Title = styled.Text`
