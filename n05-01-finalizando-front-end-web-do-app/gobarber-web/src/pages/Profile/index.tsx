@@ -109,6 +109,7 @@ const Profile: React.FC = () => {
         });
       }
     },
+    // eslint-disable-next-line
     [addToast, history],
   );
 
